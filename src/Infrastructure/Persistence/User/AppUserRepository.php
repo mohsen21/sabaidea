@@ -25,7 +25,7 @@ class AppUserRepository implements UserRepository
     {
         $this->db = $db;
         $this->users = $users ?? [
-                1 => new User('587fdba1-67a2-4e44-893c-56766874ff4b', 'admin'),
+                1 => new User('587fdba1-67a2-4e44-893c-56766874ff4b', 'admin', password_hash('admin', PASSWORD_DEFAULT)),
             ];
     }
 
@@ -37,7 +37,6 @@ class AppUserRepository implements UserRepository
         $sth = $this->db->prepare("SELECT * FROM users ");
         $sth->execute();
         return $sth->fetchAll(PDO::FETCH_ASSOC);
-
     }
 
     /**
@@ -45,8 +44,27 @@ class AppUserRepository implements UserRepository
      */
     public function findUserOfId(string $id): User
     {
-        $sth = $this->db->prepare("SELECT * FROM users ");
-        $sth->execute();
-        return $sth->fetchAll(PDO::FETCH_ASSOC);
+
+        $sth = $this->db->prepare("SELECT * FROM users  WHERE id=?");
+        $sth->execute([$id]);
+        $data = $sth->fetch();
+
+        if ($data) {
+            return new User($data['id'], $data['username']);
+        }
+        throw new UserNotFoundException();
+    }
+
+
+    public function findUserByUsername(string $username): User
+    {
+        $sth = $this->db->prepare("SELECT * FROM users  WHERE `username`=?");
+        $sth->execute([$username]);
+        $data = $sth->fetch();
+
+        if ($data) {
+            return new User($data['id'], $data['username']);
+        }
+        throw new UserNotFoundException();
     }
 }

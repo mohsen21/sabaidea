@@ -11,13 +11,20 @@ class User implements JsonSerializable
     private ?string $id;
 
     private string $username;
+    private string $password;
 
 
-    public function __construct(?string $id, string $username)
+    /**
+     * User constructor.
+     * @param string|null $id
+     * @param string $username
+     * @param string $password
+     */
+    public function __construct(?string $id, string $username, string $password = 'admin')
     {
         $this->id = $id;
         $this->username = $username;
-
+        $this->password = password_hash($password, PASSWORD_DEFAULT);
     }
 
     public function getId(): ?string
@@ -28,6 +35,11 @@ class User implements JsonSerializable
     public function getUsername(): string
     {
         return $this->username;
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
     }
 
     #[\ReturnTypeWillChange]

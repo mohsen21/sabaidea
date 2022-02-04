@@ -22,6 +22,7 @@ return function (App $app) {
 
     $app->group('/users', function (Group $group) {
         $group->get('', ListUsersAction::class);
+        $group->post('/login', \App\Application\Actions\User\LoginUsersAction::class);
         $group->get('/{id}', ViewUserAction::class);
     });
     $app->get('/db', function (Request $request, Response $response) {
