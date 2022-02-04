@@ -19,9 +19,6 @@ class ViewLinkAction extends LinkAction
             return $this->respondWithData(['message' => 'link not found'], 404);
         }
         $linkObj = $this->linkRepository->findLinkByTag($link);
-        var_dump($linkObj);
-        exit();
-
-        return $this->respondWithData(['']);
+        return $this->respondWithData([$linkObj]);
     }
 }
