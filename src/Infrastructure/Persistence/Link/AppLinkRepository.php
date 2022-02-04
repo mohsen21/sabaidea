@@ -64,7 +64,7 @@ class AppLinkRepository implements LinkRepository
         $data = $sth->fetch();
 
         if ($data) {
-            return new Link($data['id'], $data['username']);
+            return new Link($data['tag'], $data['link']);
         }
         throw new LinkNotFoundException();
     }
