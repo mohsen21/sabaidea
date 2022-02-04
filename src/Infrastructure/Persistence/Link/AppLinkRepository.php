@@ -59,7 +59,7 @@ class AppLinkRepository implements LinkRepository
 
     public function findLinkByTag(string $tag): Link
     {
-        $sth = $this->db->prepare("SELECT * FROM links  WHERE `username`=?");
+        $sth = $this->db->prepare("SELECT * FROM links  WHERE `tag`=?");
         $sth->execute([$tag]);
         $data = $sth->fetch();
 

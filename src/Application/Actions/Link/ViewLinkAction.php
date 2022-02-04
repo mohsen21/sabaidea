@@ -15,7 +15,11 @@ class ViewLinkAction extends LinkAction
     {
 
         $link = $this->resolveArg('link');
-        var_dump('jkhj');
+        if (trim($link) === '') {
+            return $this->respondWithData(['message' => 'link not found'], 404);
+        }
+        $linkObj = $this->linkRepository->findLinkByTag($link);
+        var_dump($linkObj);
         exit();
 
         return $this->respondWithData(['']);
