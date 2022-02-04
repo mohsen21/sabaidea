@@ -15,9 +15,11 @@ return function (App $app) {
 //        return $response;
 //    });
     $app->group('/link', function (Group $group) {
+        $group->get('/list', \App\Application\Actions\Link\ListLinkAction::class);
         $group->get('/{link}', \App\Application\Actions\Link\ViewLinkAction::class);
+        $group->post('', \App\Application\Actions\Link\CreateLinkAction::class);
     });
-    $app->group('/users', function (Group $group) {
+    $app->group('/user', function (Group $group) {
         $group->get('', ListUsersAction::class);
         $group->post('/login', \App\Application\Actions\User\LoginUsersAction::class);
         $group->get('/{id}', ViewUserAction::class);

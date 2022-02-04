@@ -68,4 +68,18 @@ class AppLinkRepository implements LinkRepository
         }
         throw new LinkNotFoundException();
     }
+
+    public function add(Link $link)
+    {
+        try {
+            $st = $this->db->prepare("insert into links set  tag = :tag,  link = :link");
+            return $st->execute(array(
+                ':tag' => $link->getTag(),
+                ':link' => $link->getLink()
+            ));
+
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 }
