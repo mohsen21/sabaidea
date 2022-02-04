@@ -7,7 +7,7 @@ namespace Tests\Application\Actions\User;
 use App\Application\Actions\ActionError;
 use App\Application\Actions\ActionPayload;
 use App\Application\Handlers\HttpErrorHandler;
-use App\Domain\User\User;
+use App\Domain\User\Link;
 use App\Domain\User\UserNotFoundException;
 use App\Domain\User\UserRepository;
 use DI\Container;
@@ -23,7 +23,7 @@ class ViewUserActionTest extends TestCase
         /** @var Container $container */
         $container = $app->getContainer();
 
-        $user = new User(1, 'bill.gates', 'Bill', 'Gates');
+        $user = new Link(1, 'bill.gates', 'Bill', 'Gates');
 
         $userRepositoryProphecy = $this->prophesize(UserRepository::class);
         $userRepositoryProphecy

@@ -10,16 +10,13 @@ use Slim\App;
 use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 
 return function (App $app) {
-    $app->options('/{routes:.*}', function (Request $request, Response $response) {
-        // CORS Pre-Flight OPTIONS Request Handler
-        return $response;
-    });
-
-    $app->get('/', function (Request $request, Response $response) {
-        $response->getBody()->write('Hello mohsen!');
-        return $response;
-    });
-
+//    $app->options('/{routes:.*}', function (Request $request, Response $response) {
+//        // CORS Pre-Flight OPTIONS Request Handler
+//        return $response;
+//    });
+//    $app->group('/link', function (Group $group) {
+//        $group->get('/{link}', \App\Application\Actions\Link\ViewLinkAction::class);
+//    });
     $app->group('/users', function (Group $group) {
         $group->get('', ListUsersAction::class);
         $group->post('/login', \App\Application\Actions\User\LoginUsersAction::class);

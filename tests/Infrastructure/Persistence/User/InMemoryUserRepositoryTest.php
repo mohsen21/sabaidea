@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace Tests\Infrastructure\Persistence\User;
 
-use App\Domain\User\User;
+use App\Domain\User\Link;
 use App\Domain\User\UserNotFoundException;
-use App\Infrastructure\Persistence\User\AppUserRepository;
+use App\Infrastructure\Persistence\User\AppLinkRepository;
 use Tests\TestCase;
 
 class InMemoryUserRepositoryTest extends TestCase
 {
     public function testFindAll()
     {
-        $user = new User(1, 'bill.gates', 'Bill', 'Gates');
+        $user = new Link(1, 'bill.gates', 'Bill', 'Gates');
 
-        $userRepository = new AppUserRepository([1 => $user]);
+        $userRepository = new AppLinkRepository([1 => $user]);
 
         $this->assertEquals([$user], $userRepository->findAll());
     }
@@ -23,30 +23,30 @@ class InMemoryUserRepositoryTest extends TestCase
     public function testFindAllUsersByDefault()
     {
         $users = [
-            1 => new User(1, 'bill.gates', 'Bill', 'Gates'),
-            2 => new User(2, 'steve.jobs', 'Steve', 'Jobs'),
-            3 => new User(3, 'mark.zuckerberg', 'Mark', 'Zuckerberg'),
-            4 => new User(4, 'evan.spiegel', 'Evan', 'Spiegel'),
-            5 => new User(5, 'jack.dorsey', 'Jack', 'Dorsey'),
+            1 => new Link(1, 'bill.gates', 'Bill', 'Gates'),
+            2 => new Link(2, 'steve.jobs', 'Steve', 'Jobs'),
+            3 => new Link(3, 'mark.zuckerberg', 'Mark', 'Zuckerberg'),
+            4 => new Link(4, 'evan.spiegel', 'Evan', 'Spiegel'),
+            5 => new Link(5, 'jack.dorsey', 'Jack', 'Dorsey'),
         ];
 
-        $userRepository = new AppUserRepository();
+        $userRepository = new AppLinkRepository();
 
         $this->assertEquals(array_values($users), $userRepository->findAll());
     }
 
     public function testFindUserOfId()
     {
-        $user = new User(1, 'bill.gates', 'Bill', 'Gates');
+        $user = new Link(1, 'bill.gates', 'Bill', 'Gates');
 
-        $userRepository = new AppUserRepository([1 => $user]);
+        $userRepository = new AppLinkRepository([1 => $user]);
 
         $this->assertEquals($user, $userRepository->findUserOfId(1));
     }
 
     public function testFindUserOfIdThrowsNotFoundException()
     {
-        $userRepository = new AppUserRepository([]);
+        $userRepository = new AppLinkRepository([]);
         $this->expectException(UserNotFoundException::class);
         $userRepository->findUserOfId(1);
     }
