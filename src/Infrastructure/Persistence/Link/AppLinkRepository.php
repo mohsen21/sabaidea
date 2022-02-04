@@ -51,7 +51,7 @@ class AppLinkRepository implements LinkRepository
         $data = $sth->fetch();
 
         if ($data) {
-            return new Link($data['id'], $data['username']);
+            return new Link($data['tag'], $data['link']);
         }
         throw new LinkNotFoundException();
     }
@@ -77,6 +77,19 @@ class AppLinkRepository implements LinkRepository
                 ':tag' => $link->getTag(),
                 ':link' => $link->getLink()
             ));
+
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public function delete(int $id)
+    {
+        try {
+            if (!$this->findLinkOfId($id)) return false;
+            $sth = $this->db->prepare("Delete  FROM links  WHERE `id`=?");
+            return $sth->execute([$id]);
+
 
         } catch (\Exception $e) {
             return false;

@@ -16,6 +16,7 @@ return function (App $app) {
 //    });
     $app->group('/link', function (Group $group) {
         $group->get('/list', \App\Application\Actions\Link\ListLinkAction::class);
+        $group->delete('/{id}', \App\Application\Actions\Link\DeleteLinkAction::class);
         $group->get('/{link}', \App\Application\Actions\Link\ViewLinkAction::class);
         $group->post('', \App\Application\Actions\Link\CreateLinkAction::class);
     });
